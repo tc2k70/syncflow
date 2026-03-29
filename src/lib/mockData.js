@@ -1,4 +1,4 @@
-// Sample line list rows for demo/testing (simulates parsed Excel data)
+// Sample line list rows for demo/testing — 10 circuits, 3 with errors
 export const SAMPLE_ROWS = [
   {
     circuitName: 'HT-001', segmentName: 'SEG-A', lineNumber: 'L-100-01-XXXX',
@@ -21,9 +21,10 @@ export const SAMPLE_ROWS = [
     class: 'I', divZone: 'Division 1', group: 'C', tClass: 'T2', ait: 300, additionalCable: 5,
   },
   {
+    // ERROR: invalid volts '380'
     circuitName: 'HT-003', segmentName: 'SEG-B', lineNumber: 'L-200-01-XXXX',
     tempControlType: 'Self-Regulating', maintTemp: 45, minAmbientTemp: -30, startUpAmbient: -35,
-    wind: 20, safetyFactor: 1.2, circuitConfiguration: 'Parallel', volts: '480',
+    wind: 20, safetyFactor: 1.2, circuitConfiguration: 'Parallel', volts: '380',
     breakerSize: 30, breakerType: 'Standard', pipeSize: '6"', pipeLen: 120, maxExpTemp: 60,
     maxProductTemp: 70, modNo: 'M-02', workPackageNo: 'WP-200', areaNo: 'B2',
     pipeMaterial: 'Carbon Steel', insulType: 'Fiberglass', insulThk: '1"',
@@ -49,5 +50,57 @@ export const SAMPLE_ROWS = [
     pipeMaterial: 'Carbon Steel', insulType: 'Polyurethane Foam', insulThk: '1"',
     insulSizing: 'OD', heaterStyle: 'Parallel', heaterFamily: 'XSR',
     class: 'I', divZone: 'Division 2', group: 'D', tClass: 'T3', ait: 250, additionalCable: 2,
+  },
+  {
+    // ERROR: maintTemp is not a number
+    circuitName: 'HT-006', segmentName: 'SEG-C', lineNumber: 'L-300-02-XXXX',
+    tempControlType: 'Constant Watt', maintTemp: 'N/A', minAmbientTemp: -15, startUpAmbient: -20,
+    wind: 12, safetyFactor: 1.15, circuitConfiguration: 'Series', volts: '240',
+    breakerSize: 20, breakerType: 'GFEP', pipeSize: '2"', pipeLen: 33, maxExpTemp: 65,
+    maxProductTemp: 75, modNo: 'M-03', workPackageNo: 'WP-300', areaNo: 'C1',
+    pipeMaterial: 'Carbon Steel', insulType: 'Mineral Wool', insulThk: '1.5"',
+    insulSizing: 'OD', heaterStyle: 'Parallel', heaterFamily: 'XL-Trace',
+    class: 'I', divZone: 'Division 2', group: 'D', tClass: 'T3', ait: 260, additionalCable: 1,
+  },
+  {
+    circuitName: 'HT-007', segmentName: 'SEG-D', lineNumber: 'L-400-01-XXXX',
+    tempControlType: 'Self-Regulating', maintTemp: 55, minAmbientTemp: -25, startUpAmbient: -30,
+    wind: 18, safetyFactor: 1.2, circuitConfiguration: 'Parallel', volts: '480',
+    breakerSize: 30, breakerType: 'Standard', pipeSize: '4"', pipeLen: 90, maxExpTemp: 70,
+    maxProductTemp: 80, modNo: 'M-04', workPackageNo: 'WP-400', areaNo: 'D1',
+    pipeMaterial: 'Stainless Steel', insulType: 'Fiberglass', insulThk: '1.5"',
+    insulSizing: 'OD', heaterStyle: 'Parallel', heaterFamily: 'QTVR',
+    class: 'II', divZone: 'Zone 2', group: 'IIA', tClass: 'T4', ait: 220, additionalCable: 4,
+  },
+  {
+    circuitName: 'HT-008', segmentName: 'SEG-D', lineNumber: 'L-400-02-XXXX',
+    tempControlType: 'Mineral Insulated', maintTemp: 95, minAmbientTemp: -10, startUpAmbient: -15,
+    wind: 8, safetyFactor: 1.1, circuitConfiguration: 'Series', volts: '600',
+    breakerSize: 35, breakerType: 'EPD', pipeSize: '3"', pipeLen: 64, maxExpTemp: 110,
+    maxProductTemp: 140, modNo: 'M-04', workPackageNo: 'WP-400', areaNo: 'D2',
+    pipeMaterial: 'Alloy Steel', insulType: 'Calcium Silicate', insulThk: '2"',
+    insulSizing: 'OD', heaterStyle: 'Series', heaterFamily: 'MI',
+    class: 'I', divZone: 'Zone 1', group: 'IIB', tClass: 'T5', ait: 380, additionalCable: 6,
+  },
+  {
+    circuitName: 'HT-009', segmentName: 'SEG-E', lineNumber: 'L-500-01-XXXX',
+    tempControlType: 'Self-Regulating', maintTemp: 40, minAmbientTemp: -20, startUpAmbient: -25,
+    wind: 14, safetyFactor: 1.15, circuitConfiguration: 'Parallel', volts: '120',
+    breakerSize: 20, breakerType: 'GFEP', pipeSize: '2"', pipeLen: 38, maxExpTemp: 55,
+    maxProductTemp: 65, modNo: 'M-05', workPackageNo: 'WP-500', areaNo: 'E1',
+    pipeMaterial: 'Carbon Steel', insulType: 'Polyurethane Foam', insulThk: '1"',
+    insulSizing: 'OD', heaterStyle: 'Parallel', heaterFamily: 'BTV',
+    class: 'I', divZone: 'Division 2', group: 'D', tClass: 'T3', ait: 240, additionalCable: 2,
+  },
+  {
+    // ERROR: invalid volts '999'
+    circuitName: 'HT-010', segmentName: 'SEG-E', lineNumber: 'L-500-02-XXXX',
+    tempControlType: 'Constant Watt', maintTemp: 70, minAmbientTemp: -20, startUpAmbient: -25,
+    wind: 16, safetyFactor: 1.2, circuitConfiguration: 'Series', volts: '999',
+    breakerSize: 25, breakerType: 'GFEP+OL', pipeSize: '3"', pipeLen: 52, maxExpTemp: 85,
+    maxProductTemp: 95, modNo: 'M-05', workPackageNo: 'WP-500', areaNo: 'E2',
+    pipeMaterial: 'Stainless Steel', insulType: 'Mineral Wool', insulThk: '1.5"',
+    insulSizing: 'OD', heaterStyle: 'Parallel', heaterFamily: 'XSR',
+    class: 'II', divZone: 'Division 1', group: 'C', tClass: 'T2', ait: 290, additionalCable: 3,
   },
 ];

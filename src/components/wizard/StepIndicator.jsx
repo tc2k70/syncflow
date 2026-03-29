@@ -2,9 +2,9 @@ import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const STEPS = [
-  { number: 1, label: 'Select File' },
-  { number: 2, label: 'Validate' },
-  { number: 3, label: 'Select Project' },
+  { number: 1, label: 'Select Project' },
+  { number: 2, label: 'Select File' },
+  { number: 3, label: 'Validate' },
   { number: 4, label: 'Pre-Merge Check' },
   { number: 5, label: 'Approve & Import' },
 ];

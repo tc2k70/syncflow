@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { FileSpreadsheet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StepIndicator from '../components/wizard/StepIndicator';
+import Step4SelectProject from '../components/wizard/Step4SelectProject';
 import Step1FileSelect from '../components/wizard/Step1FileSelect';
 import Step3Validate from '../components/wizard/Step3Validate';
-import Step4SelectProject from '../components/wizard/Step4SelectProject';
 import Step5PreMerge from '../components/wizard/Step5PreMerge';
 import Step6ApproveImport from '../components/wizard/Step6ApproveImport';
 import ThemeToggle from '../components/ThemeToggle';
@@ -45,28 +45,29 @@ export default function ImportWizard() {
       {/* Step content */}
       <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">
         {step === 1 && (
+          <Step4SelectProject
+            onNext={(selectedProject) => {
+              setProject(selectedProject);
+              setStep(2);
+            }}
+            onBack={null}
+          />
+        )}
+        {step === 2 && (
           <Step1FileSelect
             onNext={(parsedRows, info) => {
               setRows(parsedRows);
               setFileInfo(info);
-              setStep(2);
+              setStep(3);
             }}
-          />
-        )}
-        {step === 2 && (
-          <Step3Validate
-            rows={rows}
-            fileInfo={fileInfo}
-            onNext={() => setStep(3)}
             onBack={() => setStep(1)}
           />
         )}
         {step === 3 && (
-          <Step4SelectProject
-            onNext={(selectedProject) => {
-              setProject(selectedProject);
-              setStep(4);
-            }}
+          <Step3Validate
+            rows={rows}
+            fileInfo={fileInfo}
+            onNext={() => setStep(4)}
             onBack={() => setStep(2)}
           />
         )}

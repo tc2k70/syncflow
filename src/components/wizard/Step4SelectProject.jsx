@@ -94,13 +94,6 @@ export default function Step4SelectProject({ onNext, onBack }) {
 
   return (
     <div className="flex gap-6 w-full">
-      {/* Left sidebar */}
-      <div className="w-56 shrink-0 flex flex-col gap-4">
-        <SelectedProjectPanel project={selected} />
-        <TipsPanel />
-        <RecentUploadsPanel />
-      </div>
-
       {/* Main content */}
       <div className="flex-1 flex flex-col gap-5">
         <div>
@@ -163,11 +156,20 @@ export default function Step4SelectProject({ onNext, onBack }) {
         )}
 
         <div className="flex justify-between pt-2">
-          <Button variant="outline" onClick={onBack}>← Back</Button>
+          {onBack ? (
+            <Button variant="outline" onClick={onBack}>← Back</Button>
+          ) : <span />}
           <Button onClick={() => onNext(selected)} disabled={!selected}>
-            Run Pre-Merge Check →
+            Select File →
           </Button>
         </div>
+      </div>
+
+      {/* Right sidebar */}
+      <div className="w-56 shrink-0 flex flex-col gap-4">
+        <SelectedProjectPanel project={selected} />
+        <TipsPanel />
+        <RecentUploadsPanel />
       </div>
     </div>
   );

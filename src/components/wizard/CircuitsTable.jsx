@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Circle } from 'lucide-react';
+import DetailPopup from './DetailPopup';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import CircuitDetailPanel from './CircuitDetailPanel';
 
 export default function CircuitsTable({ circuits, selected, onSelect, projectSelected }) {
-  const [popup, setPopup] = useState(null);
+  const [popup, setPopup] = useState(null); // { circuit, x, y }
 
   return (
     <div className="flex gap-4 items-start">
@@ -39,7 +40,7 @@ export default function CircuitsTable({ circuits, selected, onSelect, projectSel
                       <span
                         className={cn('font-medium truncate md:cursor-default cursor-pointer', selected?.name === c.name ? 'text-primary' : 'text-foreground')}
                         title={c.name}
-                        onClick={e => { e.stopPropagation(); setPopup(p => p?.name === c.name ? null : c); }}
+                        onClick={e => { e.stopPropagation(); setPopup(p => p?.circuit?.name === c.name ? null : { circuit: c, x: e.clientX, y: e.clientY }); }}
                       >{c.name}</span>
                     </div>
                   </td>
@@ -77,11 +78,10 @@ export default function CircuitsTable({ circuits, selected, onSelect, projectSel
         <CircuitDetailPanel circuit={selected} />
       </div>
 
-      {/* Click popup — mobile only */}
       {popup && (
-        <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 border border-border rounded-lg bg-card shadow-xl">
-          <CircuitDetailPanel circuit={popup} />
-        </div>
+        <DetailPopup pos={{ x: popup.x, y: popup.y }} onClose={() => setPopup(null)}>
+          <CircuitDetailPanel circuit={popup.circuit} />
+        </DetailPopup>
       )}
     </div>
   );

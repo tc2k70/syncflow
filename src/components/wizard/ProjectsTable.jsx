@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import DetailPopup from './DetailPopup';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -7,7 +8,7 @@ import ProjectDetailPanel from './ProjectDetailPanel';
 
 export default function ProjectsTable({ projects, loading, selected, onSelect, onReload }) {
   const [search, setSearch] = useState('');
-  const [popup, setPopup] = useState(null);
+  const [popup, setPopup] = useState(null); // { project, x, y }
 
   const filtered = projects.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -57,14 +58,14 @@ export default function ProjectsTable({ projects, loading, selected, onSelect, o
                     <span
                       className={cn('font-medium truncate block md:cursor-default cursor-pointer', selected?.id === project.id ? 'text-primary' : 'text-foreground')}
                       title={project.name}
-                      onClick={e => { e.stopPropagation(); setPopup(p => p?.id === project.id ? null : project); }}
+                      onClick={e => { e.stopPropagation(); setPopup(p => p?.project?.id === project.id ? null : { project, x: e.clientX, y: e.clientY }); }}
                     >{project.name}</span>
                   </td>
                   <td className="px-4 py-2.5 max-w-[80px]">
                     <span
                       className={cn('truncate block md:cursor-default cursor-pointer', selected?.id === project.id ? 'text-primary' : 'text-foreground')}
                       title={project.id}
-                      onClick={e => { e.stopPropagation(); setPopup(p => p?.id === project.id ? null : project); }}
+                      onClick={e => { e.stopPropagation(); setPopup(p => p?.project?.id === project.id ? null : { project, x: e.clientX, y: e.clientY }); }}
                     >{project.id}</span>
                   </td>
                   <td className="px-4 py-2.5 text-muted-foreground hidden sm:table-cell">{project.agency}</td>
@@ -100,11 +101,10 @@ export default function ProjectsTable({ projects, loading, selected, onSelect, o
         <ProjectDetailPanel project={selected} />
       </div>
 
-      {/* Click popup — mobile only */}
       {popup && (
-        <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 border border-border rounded-lg bg-card shadow-xl">
-          <ProjectDetailPanel project={popup} />
-        </div>
+        <DetailPopup pos={{ x: popup.x, y: popup.y }} onClose={() => setPopup(null)}>
+          <ProjectDetailPanel project={popup.project} />
+        </DetailPopup>
       )}
     </div>
   );

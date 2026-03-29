@@ -34,21 +34,21 @@ export default function ProjectView() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="border-b border-border px-6 py-3 flex items-center justify-between bg-card/50 backdrop-blur sticky top-0 z-10">
+      <header className="px-6 py-3 flex items-center justify-between sticky top-0 z-10" style={{ background: 'var(--thermon-black)', borderBottom: '3px solid var(--thermon-red)' }}>
         <div className="flex items-center gap-3">
           <Link to="/">
-            <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="sm" className="gap-1.5 text-white/70 hover:text-white hover:bg-white/10">
               <ArrowLeft className="w-4 h-4" /> Back to Import
             </Button>
           </Link>
-          <div className="w-px h-5 bg-border" />
+          <div className="w-px h-5 bg-white/20" />
           <div className="flex items-center gap-2">
-            <Database className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm font-semibold text-foreground">Project {projectId}</span>
+            <Database className="w-4 h-4 text-white/60" />
+            <span className="text-sm font-bold text-white tracking-widest uppercase" style={{ fontFamily: "'Oswald', sans-serif" }}>Project {projectId}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="gap-1.5" onClick={load}>
+          <Button variant="outline" size="sm" className="gap-1.5 border-white/20 text-white/80 hover:bg-white/10" onClick={load}>
             <RefreshCw className="w-3.5 h-3.5" /> Refresh
           </Button>
           <ThemeToggle />

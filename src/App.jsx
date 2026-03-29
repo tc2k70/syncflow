@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import ImportWizard from './pages/ImportWizard';
 import ProjectView from './pages/ProjectView';
@@ -44,6 +45,12 @@ const AuthenticatedApp = () => {
 
 
 function App() {
+  useEffect(() => {
+    // Set default theme on first load
+    if (!document.documentElement.getAttribute('data-theme')) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }, []);
 
   return (
     <AuthProvider>

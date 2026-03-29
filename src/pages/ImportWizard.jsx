@@ -21,18 +21,18 @@ export default function ImportWizard() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="border-b border-border px-6 py-3 flex items-center justify-between bg-card/50 backdrop-blur sticky top-0 z-10">
+      <header className="px-6 py-3 flex items-center justify-between sticky top-0 z-10" style={{ background: 'var(--thermon-black)', borderBottom: '3px solid var(--thermon-red)' }}>
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-            <FileSpreadsheet className="w-4 h-4 text-primary-foreground" />
+          <div className="w-7 h-7 rounded flex items-center justify-center" style={{ background: 'var(--thermon-red)' }}>
+            <FileSpreadsheet className="w-4 h-4 text-white" />
           </div>
-          <span className="font-semibold text-sm text-foreground tracking-tight">HeatTrace Import</span>
+          <span className="text-sm text-white tracking-widest uppercase font-bold" style={{ fontFamily: "'Oswald', sans-serif" }}>HeatTrace Import</span>
         </div>
         <div className="flex items-center gap-3">
           {importResult && (
             <Link
               to={`/project/${project?.id}`}
-              className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              className="text-xs text-white/60 hover:text-white transition-colors"
             >
               View Last Import →
             </Link>

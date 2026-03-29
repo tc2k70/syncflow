@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import CircuitDetailPanel from './CircuitDetailPanel';
 
 export default function CircuitsTable({ circuits, selected, onSelect, projectSelected }) {
-  const [hovered, setHovered] = useState(null);
+  const [popup, setPopup] = useState(null);
 
   return (
     <div className="flex gap-4 items-start">
@@ -31,14 +31,16 @@ export default function CircuitsTable({ circuits, selected, onSelect, projectSel
                 <tr
                   key={i}
                   onClick={() => onSelect(c)}
-                  onMouseEnter={() => setHovered(c)}
-                  onMouseLeave={() => setHovered(null)}
                   className={cn('border-b border-border/50 cursor-pointer transition-colors', selected?.name === c.name ? 'bg-primary/10' : 'hover:bg-accent/30')}
                 >
                   <td className="px-4 py-2.5 max-w-[120px]">
                     <div className="flex items-center gap-2">
                       <Circle className={cn('w-2.5 h-2.5 shrink-0', c.status === 'error' ? 'fill-destructive text-destructive' : 'fill-transparent text-muted-foreground/40')} />
-                      <span className={cn('font-medium truncate', selected?.name === c.name ? 'text-primary' : 'text-foreground')} title={c.name}>{c.name}</span>
+                      <span
+                        className={cn('font-medium truncate md:cursor-default cursor-pointer', selected?.name === c.name ? 'text-primary' : 'text-foreground')}
+                        title={c.name}
+                        onClick={e => { e.stopPropagation(); setPopup(p => p?.name === c.name ? null : c); }}
+                      >{c.name}</span>
                     </div>
                   </td>
                   <td className="px-4 py-2.5 text-muted-foreground hidden sm:table-cell">{c.segments}</td>
@@ -75,10 +77,10 @@ export default function CircuitsTable({ circuits, selected, onSelect, projectSel
         <CircuitDetailPanel circuit={selected} />
       </div>
 
-      {/* Hover popup — mobile only */}
-      {hovered && (
+      {/* Click popup — mobile only */}
+      {popup && (
         <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 border border-border rounded-lg bg-card shadow-xl">
-          <CircuitDetailPanel circuit={hovered} />
+          <CircuitDetailPanel circuit={popup} />
         </div>
       )}
     </div>

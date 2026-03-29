@@ -7,7 +7,7 @@ import ProjectDetailPanel from './ProjectDetailPanel';
 
 export default function ProjectsTable({ projects, loading, selected, onSelect, onReload }) {
   const [search, setSearch] = useState('');
-  const [hovered, setHovered] = useState(null);
+  const [popup, setPopup] = useState(null);
 
   const filtered = projects.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -56,10 +56,18 @@ export default function ProjectsTable({ projects, loading, selected, onSelect, o
                   )}
                 >
                   <td className="px-4 py-2.5 max-w-[160px]">
-                    <span className={cn('font-medium truncate block', selected?.id === project.id ? 'text-primary' : 'text-foreground')} title={project.name}>{project.name}</span>
+                    <span
+                      className={cn('font-medium truncate block md:cursor-default cursor-pointer', selected?.id === project.id ? 'text-primary' : 'text-foreground')}
+                      title={project.name}
+                      onClick={e => { e.stopPropagation(); setPopup(p => p?.id === project.id ? null : project); }}
+                    >{project.name}</span>
                   </td>
                   <td className="px-4 py-2.5 max-w-[80px]">
-                    <span className={cn('truncate block', selected?.id === project.id ? 'text-primary' : 'text-foreground')} title={project.id}>{project.id}</span>
+                    <span
+                      className={cn('truncate block md:cursor-default cursor-pointer', selected?.id === project.id ? 'text-primary' : 'text-foreground')}
+                      title={project.id}
+                      onClick={e => { e.stopPropagation(); setPopup(p => p?.id === project.id ? null : project); }}
+                    >{project.id}</span>
                   </td>
                   <td className="px-4 py-2.5 text-muted-foreground hidden sm:table-cell">{project.agency}</td>
                   <td className="px-4 py-2.5 text-muted-foreground hidden lg:table-cell max-w-[120px]">
@@ -94,10 +102,10 @@ export default function ProjectsTable({ projects, loading, selected, onSelect, o
         <ProjectDetailPanel project={selected} />
       </div>
 
-      {/* Hover popup — mobile only */}
-      {hovered && (
+      {/* Click popup — mobile only */}
+      {popup && (
         <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 border border-border rounded-lg bg-card shadow-xl">
-          <ProjectDetailPanel project={hovered} />
+          <ProjectDetailPanel project={popup} />
         </div>
       )}
     </div>

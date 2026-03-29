@@ -41,11 +41,11 @@ export async function validateData(rows) {
 export async function fetchProjects() {
   await delay(800);
   return [
-    { id: 'PRJ-001', name: 'Refinery Unit 4 - Phase 2', site: 'Houston, TX', status: 'Active', circuitCount: 142 },
-    { id: 'PRJ-002', name: 'LNG Terminal Expansion', site: 'Sabine Pass, LA', status: 'Active', circuitCount: 87 },
-    { id: 'PRJ-003', name: 'Petrochemical Plant B', site: 'Beaumont, TX', status: 'In Progress', circuitCount: 215 },
-    { id: 'PRJ-004', name: 'Offshore Platform Delta', site: 'Gulf of Mexico', status: 'Active', circuitCount: 63 },
-    { id: 'PRJ-005', name: 'Gas Processing Facility', site: 'Midland, TX', status: 'Planning', circuitCount: 0 },
+    { id: 'PRJ-001', name: 'Refinery Unit 4 - Phase 2', site: 'Houston, TX', status: 'Active', circuitCount: 142, agency: 'NEC', areaType: 'Ordinary / Divisions', owner: 'DTWGMR1\flyty', lastModified: 'Mon, Oct 20 2025', unitSummary: 'Imperial / Imperial / Fahrenheit / Imperial', units: { pipe: 'Imperial', insulation: 'Imperial', temperature: 'Fahrenheit', other: 'Imperial' } },
+    { id: 'PRJ-002', name: 'LNG Terminal Expansion', site: 'Sabine Pass, LA', status: 'Active', circuitCount: 87, agency: 'NEC', areaType: 'Ordinary / Divisions', owner: 'DTWGMR1\flyty', lastModified: 'Mon, Oct 15 2025', unitSummary: 'Metric / Metric / Celsius / Metric', units: { pipe: 'Metric', insulation: 'Metric', temperature: 'Celsius', other: 'Metric' } },
+    { id: 'PRJ-003', name: 'Petrochemical Plant B', site: 'Beaumont, TX', status: 'In Progress', circuitCount: 215, agency: 'NEC', areaType: 'Hazardous / Zones', owner: 'DTWGMR1\flyty', lastModified: 'Tue, Oct 21 2025', unitSummary: 'Imperial / Imperial / Fahrenheit / Imperial', units: { pipe: 'Imperial', insulation: 'Imperial', temperature: 'Fahrenheit', other: 'Imperial' } },
+    { id: 'PRJ-004', name: 'Offshore Platform Delta', site: 'Gulf of Mexico', status: 'Active', circuitCount: 63, agency: 'IEC', areaType: 'Hazardous / Zones', owner: 'DTWGMR1\flyty', lastModified: 'Wed, Oct 22 2025', unitSummary: 'Metric / Metric / Celsius / Metric', units: { pipe: 'Metric', insulation: 'Metric', temperature: 'Celsius', other: 'Metric' } },
+    { id: 'PRJ-005', name: 'Gas Processing Facility', site: 'Midland, TX', status: 'Planning', circuitCount: 0, agency: 'NEC', areaType: 'Ordinary / Divisions', owner: 'DTWGMR1\flyty', lastModified: 'Thu, Oct 23 2025', unitSummary: 'Imperial / Imperial / Fahrenheit / Imperial', units: { pipe: 'Imperial', insulation: 'Imperial', temperature: 'Fahrenheit', other: 'Imperial' } },
   ];
 }
 

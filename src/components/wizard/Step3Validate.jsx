@@ -148,17 +148,17 @@ export default function Step3Validate({ rows, fileInfo, project, onNext, onBack 
           <>
             {/* Stats */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="p-4 rounded-lg border-l-4 border-l-emerald-500 border border-border bg-card">
+              <div className="p-4 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/20">
                 <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{validRows.length}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Valid Circuits</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-500 mt-0.5">Valid Circuits</p>
               </div>
-              <div className="p-4 rounded-lg border-l-4 border-l-destructive border border-border bg-card">
+              <div className="p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
                 <p className="text-2xl font-bold text-destructive">{errorRows.length}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Circuits with Errors</p>
+                <p className="text-xs text-red-600 dark:text-red-500 mt-0.5">Circuits with Errors</p>
               </div>
-              <div className="p-4 rounded-lg border-l-4 border-l-yellow-500 border border-border bg-card">
+              <div className="p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950/20">
                 <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{result.warnings?.length ?? 0}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Fields to Review</p>
+                <p className="text-xs text-yellow-700 dark:text-yellow-500 mt-0.5">Fields to Review</p>
               </div>
             </div>
 

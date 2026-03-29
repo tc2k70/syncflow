@@ -48,8 +48,6 @@ export default function ProjectsTable({ projects, loading, selected, onSelect, o
                 <tr
                   key={project.id}
                   onClick={() => onSelect(project)}
-                  onMouseEnter={() => setHovered(project)}
-                  onMouseLeave={() => setHovered(null)}
                   className={cn(
                     'border-b border-border/50 cursor-pointer transition-colors',
                     selected?.id === project.id ? 'bg-primary/10' : 'hover:bg-accent/40'

@@ -43,7 +43,7 @@ export default function ImportWizard() {
       </div>
 
       {/* Step content */}
-      <main className={`flex-1 px-6 py-8 w-full ${step === 1 ? 'max-w-none' : 'max-w-5xl mx-auto'}`}>
+      <main className={`flex-1 px-6 py-8 w-full ${step === 1 || step === 3 ? 'max-w-none' : 'max-w-5xl mx-auto'}`}>
         {step === 1 && (
           <Step4SelectProject
             onNext={(selectedProject) => {

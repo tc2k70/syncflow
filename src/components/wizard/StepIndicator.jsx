@@ -3,11 +3,10 @@ import { cn } from '@/lib/utils';
 
 const STEPS = [
   { number: 1, label: 'Select File' },
-  { number: 2, label: 'Preview Data' },
-  { number: 3, label: 'Validate' },
-  { number: 4, label: 'Select Project' },
-  { number: 5, label: 'Pre-Merge Check' },
-  { number: 6, label: 'Approve & Import' },
+  { number: 2, label: 'Validate' },
+  { number: 3, label: 'Select Project' },
+  { number: 4, label: 'Pre-Merge Check' },
+  { number: 5, label: 'Approve & Import' },
 ];
 
 export default function StepIndicator({ currentStep }) {

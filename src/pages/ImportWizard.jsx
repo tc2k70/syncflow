@@ -3,7 +3,6 @@ import { FileSpreadsheet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StepIndicator from '../components/wizard/StepIndicator';
 import Step1FileSelect from '../components/wizard/Step1FileSelect';
-import Step2DataPreview from '../components/wizard/Step2DataPreview';
 import Step3Validate from '../components/wizard/Step3Validate';
 import Step4SelectProject from '../components/wizard/Step4SelectProject';
 import Step5PreMerge from '../components/wizard/Step5PreMerge';
@@ -30,10 +29,7 @@ export default function ImportWizard() {
         </div>
         <div className="flex items-center gap-3">
           {importResult && (
-            <Link
-              to={`/project/${project?.id}`}
-              className="text-xs text-white/60 hover:text-white transition-colors"
-            >
+            <Link to={`/project/${project?.id}`} className="text-xs text-white/60 hover:text-white transition-colors">
               View Last Import →
             </Link>
           )}
@@ -47,7 +43,7 @@ export default function ImportWizard() {
       </div>
 
       {/* Step content */}
-      <main className="flex-1 px-6 py-8 max-w-4xl mx-auto w-full">
+      <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">
         {step === 1 && (
           <Step1FileSelect
             onNext={(parsedRows, info) => {
@@ -58,7 +54,7 @@ export default function ImportWizard() {
           />
         )}
         {step === 2 && (
-          <Step2DataPreview
+          <Step3Validate
             rows={rows}
             fileInfo={fileInfo}
             onNext={() => setStep(3)}
@@ -66,38 +62,31 @@ export default function ImportWizard() {
           />
         )}
         {step === 3 && (
-          <Step3Validate
-            rows={rows}
-            onNext={() => setStep(4)}
+          <Step4SelectProject
+            onNext={(selectedProject) => {
+              setProject(selectedProject);
+              setStep(4);
+            }}
             onBack={() => setStep(2)}
           />
         )}
         {step === 4 && (
-          <Step4SelectProject
-            onNext={(selectedProject) => {
-              setProject(selectedProject);
+          <Step5PreMerge
+            rows={rows}
+            project={project}
+            onNext={(result) => {
+              setMergeResult(result);
               setStep(5);
             }}
             onBack={() => setStep(3)}
           />
         )}
         {step === 5 && (
-          <Step5PreMerge
-            rows={rows}
-            project={project}
-            onNext={(result) => {
-              setMergeResult(result);
-              setStep(6);
-            }}
-            onBack={() => setStep(4)}
-          />
-        )}
-        {step === 6 && (
           <Step6ApproveImport
             rows={rows}
             project={project}
             mergeResult={mergeResult}
-            onBack={() => setStep(5)}
+            onBack={() => setStep(4)}
             onImportDone={(result) => setImportResult(result)}
           />
         )}

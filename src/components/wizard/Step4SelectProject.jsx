@@ -17,6 +17,27 @@ const MOCK_CIRCUITS = {
   ],
 };
 
+function CircuitDetailPanel({ circuit }) {
+  if (!circuit) return (
+    <div className="flex items-center justify-center h-full text-sm text-muted-foreground p-6 text-center">
+      Select a circuit to view details
+    </div>
+  );
+  return (
+    <div className="p-4 flex flex-col gap-3">
+      <p className="font-semibold text-sm text-foreground">{circuit.name}</p>
+      <div className="border-t border-border pt-3 flex flex-col gap-2 text-xs">
+        <DetailRow label="Segments" value={circuit.segments} />
+        <DetailRow label="Class" value={circuit.class} accent />
+        <DetailRow label="Voltage" value={circuit.voltage} accent />
+        <DetailRow label="Control Type" value={circuit.controlType} accent />
+        <DetailRow label="Maint / Proc / Upset" value={circuit.temps} />
+        <DetailRow label="Status" value={circuit.status === 'error' ? 'Error' : 'OK'} accent={circuit.status !== 'error'} />
+      </div>
+    </div>
+  );
+}
+
 function ProjectDetailPanel({ project }) {
   if (!project) return (
     <div className="flex items-center justify-center h-full text-sm text-muted-foreground p-6 text-center">
@@ -60,6 +81,7 @@ export default function Step4SelectProject({ onNext, onBack }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [selectedCircuit, setSelectedCircuit] = useState(null);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -73,8 +95,13 @@ export default function Step4SelectProject({ onNext, onBack }) {
 
   const circuits = selected ? (MOCK_CIRCUITS[selected.id] ?? []) : [];
 
+  const handleSelectProject = (project) => {
+    setSelected(project);
+    setSelectedCircuit(null);
+  };
+
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full max-w-none">
       <div>
         <h2 className="text-2xl font-semibold text-foreground">Select Project</h2>
         <p className="text-sm text-muted-foreground mt-0.5">Choose a project from the database to import circuits into.</p>
@@ -114,7 +141,7 @@ export default function Step4SelectProject({ onNext, onBack }) {
                 {filtered.map(project => (
                   <tr
                     key={project.id}
-                    onClick={() => setSelected(project)}
+                    onClick={() => handleSelectProject(project)}
                     className={cn(
                       'border-b border-border/50 cursor-pointer transition-colors',
                       selected?.id === project.id ? 'bg-primary/10' : 'hover:bg-accent/40'
@@ -157,7 +184,8 @@ export default function Step4SelectProject({ onNext, onBack }) {
       </div>
 
       {/* Circuits sub-grid */}
-      <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
+      <div className="flex gap-4 items-start">
+        <div className="flex-1 min-w-0 border border-border rounded-lg overflow-hidden bg-card flex flex-col">
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
@@ -174,10 +202,12 @@ export default function Step4SelectProject({ onNext, onBack }) {
               {circuits.length === 0 ? (
                 <tr><td colSpan={6} className="text-center py-8 text-muted-foreground">{selected ? 'No circuits found.' : 'Select a project to view circuits.'}</td></tr>
               ) : circuits.map((c, i) => (
-                <tr key={i} className="border-b border-border/50 hover:bg-accent/30 transition-colors">
-                  <td className="px-4 py-2.5 flex items-center gap-2">
-                    <Circle className={cn('w-2.5 h-2.5 shrink-0', c.status === 'error' ? 'fill-destructive text-destructive' : 'fill-transparent text-muted-foreground/40')} />
-                    <span className="text-foreground font-medium">{c.name}</span>
+                <tr key={i} onClick={() => setSelectedCircuit(c)} className={cn('border-b border-border/50 cursor-pointer transition-colors', selectedCircuit?.name === c.name ? 'bg-primary/10' : 'hover:bg-accent/30')}>
+                  <td className="px-4 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <Circle className={cn('w-2.5 h-2.5 shrink-0', c.status === 'error' ? 'fill-destructive text-destructive' : 'fill-transparent text-muted-foreground/40')} />
+                      <span className={cn('font-medium', selectedCircuit?.name === c.name ? 'text-primary' : 'text-foreground')}>{c.name}</span>
+                    </div>
                   </td>
                   <td className="px-4 py-2.5 text-muted-foreground">{c.segments}</td>
                   <td className="px-4 py-2.5 text-muted-foreground">{c.class}</td>
@@ -191,11 +221,20 @@ export default function Step4SelectProject({ onNext, onBack }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end px-4 py-2 border-t border-border text-xs text-muted-foreground gap-2">
-          <span>Rows per page: 10</span>
-          <span>1–{circuits.length} of {circuits.length}</span>
-          <Button variant="ghost" size="icon" className="w-6 h-6" disabled><ChevronLeft className="w-3.5 h-3.5" /></Button>
-          <Button variant="ghost" size="icon" className="w-6 h-6" disabled><ChevronRight className="w-3.5 h-3.5" /></Button>
+        <div className="flex items-center justify-between px-4 py-2 border-t border-border text-xs text-muted-foreground gap-2">
+          <span>{selectedCircuit ? '1 row selected' : ''}</span>
+          <div className="flex items-center gap-2">
+            <span>Rows per page: 10</span>
+            <span>1–{circuits.length} of {circuits.length}</span>
+            <Button variant="ghost" size="icon" className="w-6 h-6" disabled><ChevronLeft className="w-3.5 h-3.5" /></Button>
+            <Button variant="ghost" size="icon" className="w-6 h-6" disabled><ChevronRight className="w-3.5 h-3.5" /></Button>
+          </div>
+        </div>
+        </div>
+
+        {/* Circuit detail panel */}
+        <div className="w-56 shrink-0 border border-border rounded-lg bg-card min-h-[160px]">
+          <CircuitDetailPanel circuit={selectedCircuit} />
         </div>
       </div>
 

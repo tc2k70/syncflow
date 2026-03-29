@@ -108,7 +108,7 @@ export default function Step4SelectProject({ onNext, onBack }) {
       </div>
 
       {/* Top grid row: projects table + detail panel */}
-      <div className="flex gap-4 items-start md:flex-row">
+      <div className="flex gap-4 items-start">
         {/* Projects table */}
         <div className="flex-1 min-w-0 border border-border rounded-lg overflow-hidden bg-card flex flex-col">
           {/* Toolbar */}
@@ -178,7 +178,7 @@ export default function Step4SelectProject({ onNext, onBack }) {
         </div>
 
         {/* Detail panel */}
-        <div className="md:flex-row md:w-56 shrink-0 border border-border rounded-lg bg-card min-h-[200px]">
+        <div className="w-56 shrink-0 border border-border rounded-lg bg-card min-h-[200px]">
           <ProjectDetailPanel project={selected} />
         </div>
       </div>

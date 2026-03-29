@@ -1,8 +1,16 @@
 import { useState, useRef } from 'react';
-import { Upload, FileSpreadsheet, AlertCircle } from 'lucide-react';
+import { Upload, FileSpreadsheet, AlertCircle, Download, Info, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SAMPLE_ROWS } from '@/lib/mockData';
+
+const FILE_REQUIREMENTS = [
+  'File must be in Excel format (.xlsx or .xls)',
+  'First row must contain column headers matching the template',
+  'Required columns: Circuit Name, Line Number, Temp. Control Type, Volts, Pipe Len.',
+  'File size must not exceed 10MB',
+  'Data should be in rows starting from row 2 (after headers)',
+];
 
 export default function Step1FileSelect({ onNext }) {
   const [dragging, setDragging] = useState(false);
@@ -28,35 +36,58 @@ export default function Step1FileSelect({ onNext }) {
   };
 
   const handleLoadSample = () => {
-    // In a real Electron app, this would parse the actual file.
-    // For demo, we use mock data.
     onNext(SAMPLE_ROWS, { name: selectedFile?.name || 'SampleLineList.xlsx' });
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 max-w-xl mx-auto py-8">
+    <div className="flex flex-col gap-5 w-full max-w-2xl mx-auto">
       <div className="text-center">
-        <h2 className="text-2xl font-semibold text-foreground">Select Excel File</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Import the first worksheet from your Heat Tracing Line List workbook.
-        </p>
+        <h2 className="text-2xl font-semibold text-foreground">Upload Circuit Line List</h2>
+        <p className="text-sm text-muted-foreground mt-1">Upload an Excel file containing your circuit data for validation</p>
       </div>
 
+      {/* Before You Upload banner */}
+      <div className="flex items-start gap-3 px-4 py-3 rounded-lg border border-primary/40 bg-primary/5">
+        <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+        <div>
+          <p className="text-sm font-semibold text-primary">Before You Upload</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Make sure your Excel file follows the template format with all required columns. Download the template below if you haven't already.
+          </p>
+        </div>
+      </div>
+
+      {/* Need the Template? */}
+      <div className="flex items-start gap-4 px-4 py-4 rounded-lg border border-border bg-card">
+        <FileSpreadsheet className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-foreground">Need the Template?</p>
+          <p className="text-xs text-muted-foreground mt-0.5">Download our Excel template to ensure your data is properly formatted with all required columns and headers.</p>
+          <Button size="sm" className="mt-3 gap-2">
+            <Download className="w-3.5 h-3.5" /> Download Excel Template
+          </Button>
+        </div>
+      </div>
+
+      {/* Drop Zone */}
       <div
         onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onDrop={handleDrop}
-        onClick={() => inputRef.current?.click()}
         className={cn(
-          'w-full border-2 border-dashed rounded-xl p-10 flex flex-col items-center gap-3 cursor-pointer transition-all duration-150',
-          dragging ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50 hover:bg-accent/40'
+          'w-full border-2 border-dashed rounded-xl py-12 flex flex-col items-center gap-3 transition-all duration-150',
+          dragging ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50 hover:bg-accent/20'
         )}
       >
         <Upload className="w-10 h-10 text-muted-foreground" />
         <div className="text-center">
-          <p className="font-medium text-foreground">Drop your Excel file here</p>
-          <p className="text-xs text-muted-foreground mt-1">or click to browse — .xlsx, .xls, .csv</p>
+          <p className="font-medium text-foreground">Drag and drop your file here</p>
+          <p className="text-sm text-muted-foreground mt-1">or</p>
         </div>
+        <Button onClick={() => inputRef.current?.click()} className="gap-2 px-6">
+          Browse Files
+        </Button>
+        <p className="text-xs text-muted-foreground">Supported formats: .xlsx, .xls (Max size: 10MB)</p>
         <input
           ref={inputRef}
           type="file"
@@ -67,8 +98,8 @@ export default function Step1FileSelect({ onNext }) {
       </div>
 
       {selectedFile && (
-        <div className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-accent border border-border">
-          <FileSpreadsheet className="w-5 h-5 text-primary shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-foreground truncate">{selectedFile.name}</p>
             <p className="text-xs text-muted-foreground">{(selectedFile.size / 1024).toFixed(1)} KB</p>
@@ -77,27 +108,33 @@ export default function Step1FileSelect({ onNext }) {
       )}
 
       {error && (
-        <div className="w-full flex items-center gap-2 text-destructive text-sm px-3 py-2 rounded-lg bg-destructive/10 border border-destructive/20">
+        <div className="flex items-center gap-2 text-destructive text-sm px-3 py-2 rounded-lg bg-destructive/10 border border-destructive/20">
           <AlertCircle className="w-4 h-4 shrink-0" />
           {error}
         </div>
       )}
 
-      <div className="flex gap-3 w-full">
-        <Button
-          onClick={handleLoadSample}
-          disabled={!selectedFile}
-          className="flex-1"
-        >
-          Import Worksheet
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => onNext(SAMPLE_ROWS, { name: 'Demo_LineList.xlsx' })}
-          className="text-muted-foreground"
-        >
-          Load Demo
-        </Button>
+      {/* File Requirements */}
+      <div className="flex flex-col gap-2">
+        <p className="text-sm font-semibold text-foreground">File Requirements</p>
+        {FILE_REQUIREMENTS.map((req, i) => (
+          <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+            {req}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-between pt-2 border-t border-border">
+        <span />
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={() => onNext(SAMPLE_ROWS, { name: 'Demo_LineList.xlsx' })}>
+            Load Demo
+          </Button>
+          <Button onClick={handleLoadSample} disabled={!selectedFile}>
+            Continue to Validation →
+          </Button>
+        </div>
       </div>
     </div>
   );

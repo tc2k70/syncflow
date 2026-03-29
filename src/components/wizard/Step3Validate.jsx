@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 import { AlertTriangle, CheckCircle2, Loader2, Search, List, Table2, GitBranch, Download } from 'lucide-react';
 import WizardBreadcrumb from './WizardBreadcrumb';
 import TreeViewDetail from './TreeViewDetail';

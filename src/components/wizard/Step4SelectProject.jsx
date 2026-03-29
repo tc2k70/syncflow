@@ -178,7 +178,7 @@ export default function Step4SelectProject({ onNext, onBack }) {
         </div>
 
         {/* Detail panel */}
-        <div className="md:w-56 shrink-0 border border-border rounded-lg bg-card min-h-[200px]">
+        <div className="md:flex-row md:w-56 shrink-0 border border-border rounded-lg bg-card min-h-[200px]">
           <ProjectDetailPanel project={selected} />
         </div>
       </div>

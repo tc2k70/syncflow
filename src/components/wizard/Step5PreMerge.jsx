@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, CheckCircle2, Loader2, CopyX } from 'lucide-react';
+import WizardBreadcrumb from './WizardBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { preMergeCheck } from '@/lib/mockApi';
 import { cn } from '@/lib/utils';
 
-export default function Step5PreMerge({ rows, project, onNext, onBack }) {
+export default function Step5PreMerge({ rows, project, fileInfo, onNext, onBack }) {
   const [status, setStatus] = useState('loading');
   const [result, setResult] = useState(null);
 
@@ -18,6 +19,7 @@ export default function Step5PreMerge({ rows, project, onNext, onBack }) {
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto">
+      <WizardBreadcrumb project={project} fileInfo={fileInfo} />
       <div>
         <h2 className="text-2xl font-semibold text-foreground">Pre-Merge Check</h2>
         <p className="text-sm text-muted-foreground mt-0.5">
@@ -93,8 +95,8 @@ export default function Step5PreMerge({ rows, project, onNext, onBack }) {
         </div>
       )}
 
-      <div className="flex justify-between pt-2">
-        <Button variant="outline" onClick={onBack}>Back</Button>
+      <div className="flex flex-col sm:flex-row justify-between gap-2 pt-2">
+        <Button variant="outline" onClick={onBack}>← Back</Button>
         <Button onClick={onNext} disabled={status !== 'done'}>
           Proceed to Approval
         </Button>

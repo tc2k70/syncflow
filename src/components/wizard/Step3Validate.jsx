@@ -1,69 +1,14 @@
 import { useState, useEffect } from 'react';
-import { AlertTriangle, CheckCircle2, Loader2, Search, List, Table2, GitBranch, Download, FileSpreadsheet, Lightbulb } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Loader2, Search, List, Table2, GitBranch, Download } from 'lucide-react';
+import WizardBreadcrumb from './WizardBreadcrumb';
 import TreeViewDetail from './TreeViewDetail';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { validateData } from '@/lib/mockApi';
 import { LINE_LIST_COLUMNS } from '@/lib/lineListColumns';
-import { cn } from '@/lib/utils';
 
 const VIEW_COLS = LINE_LIST_COLUMNS.slice(0, 6);
-
-// ── Sidebar ────────────────────────────────────────────────────────────────
-function Sidebar({ fileInfo, onChangeFile }) {
-  return (
-    <div className="w-56 shrink-0 flex flex-col gap-4">
-      {/* Selected Project */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <div className="px-4 py-2.5 border-b border-border" style={{ background: 'var(--thermon-black)' }}>
-          <span className="text-xs font-bold uppercase tracking-widest text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Selected Project</span>
-        </div>
-        <div className="p-4">
-          <p className="text-xs text-muted-foreground italic">No project selected yet. You'll select a project in the next step.</p>
-        </div>
-      </div>
-
-      {/* Uploaded File */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <div className="px-4 py-2.5 border-b border-border" style={{ background: 'var(--thermon-black)' }}>
-          <span className="text-xs font-bold uppercase tracking-widest text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Uploaded File</span>
-        </div>
-        <div className="p-4 flex flex-col gap-3">
-          <div className="flex items-start gap-2">
-            <FileSpreadsheet className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
-            <div>
-              <p className="text-xs font-medium text-foreground break-all">{fileInfo?.name || '—'}</p>
-              {fileInfo?.size && <p className="text-xs text-muted-foreground mt-0.5">{(fileInfo.size / 1024).toFixed(1)} KB</p>}
-            </div>
-          </div>
-          <Button variant="outline" size="sm" className="w-full text-xs" onClick={onChangeFile}>
-            Change File
-          </Button>
-        </div>
-      </div>
-
-      {/* Tips */}
-      <div className="rounded-lg border border-border bg-card overflow-hidden">
-        <div className="px-4 py-2.5 border-b border-border flex items-center gap-2" style={{ background: 'var(--thermon-black)' }}>
-          <Lightbulb className="w-3.5 h-3.5 text-yellow-400" />
-          <span className="text-xs font-bold uppercase tracking-widest text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Tips</span>
-        </div>
-        <ul className="p-4 flex flex-col gap-2">
-          {[
-            'Use search to quickly find specific circuits or errors',
-            'Export errors to see detailed error information',
-            'Try the tree view to see hierarchical organization',
-          ].map((tip, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-              <span className="text-primary mt-0.5">•</span>{tip}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
 
 // ── List View ───────────────────────────────────────────────────────────────
 function ListView({ rows, result }) {
@@ -142,7 +87,7 @@ function TableView({ rows, result }) {
 }
 
 // ── Main Component ───────────────────────────────────────────────────────────
-export default function Step3Validate({ rows, fileInfo, onNext, onBack }) {
+export default function Step3Validate({ rows, fileInfo, project, onNext, onBack }) {
   const [status, setStatus] = useState('loading');
   const [result, setResult] = useState(null);
   const [activeTab, setActiveTab] = useState('errors');
@@ -185,12 +130,8 @@ export default function Step3Validate({ rows, fileInfo, onNext, onBack }) {
   ];
 
   return (
-    <div className="flex gap-6 w-full">
-      {/* Sidebar */}
-      <Sidebar fileInfo={fileInfo} onChangeFile={onBack} />
-
-      {/* Main */}
-      <div className="flex-1 flex flex-col gap-4 min-w-0">
+    <div className="flex flex-col gap-4 w-full">
+        <WizardBreadcrumb project={project} fileInfo={fileInfo} />
         <div>
           <h2 className="text-2xl font-semibold text-foreground">Validate Data</h2>
           <p className="text-sm text-muted-foreground mt-0.5">Checking {rows.length} rows against field rules and lookup values.</p>
@@ -294,7 +235,7 @@ export default function Step3Validate({ rows, fileInfo, onNext, onBack }) {
         )}
 
         {/* Nav */}
-        <div className="flex items-center justify-between pt-2 border-t border-border">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-2 border-t border-border">
           <div className="flex gap-2">
             <Button variant="outline" onClick={onBack}>← Back</Button>
             {status === 'done' && result?.errors?.length > 0 && (
@@ -307,7 +248,6 @@ export default function Step3Validate({ rows, fileInfo, onNext, onBack }) {
             Continue to Review →
           </Button>
         </div>
-      </div>
     </div>
   );
 }

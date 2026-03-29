@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { ShieldCheck, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
+import WizardBreadcrumb from './WizardBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { executeImport } from '@/lib/mockApi';
 import { useNavigate } from 'react-router-dom';
 
-export default function Step6ApproveImport({ rows, project, mergeResult, onBack, onImportDone }) {
+export default function Step6ApproveImport({ rows, project, fileInfo, mergeResult, onBack, onImportDone }) {
   const [confirmed, setConfirmed] = useState(false);
   const [status, setStatus] = useState('idle'); // idle | loading | done
   const [importResult, setImportResult] = useState(null);
@@ -55,6 +56,7 @@ export default function Step6ApproveImport({ rows, project, mergeResult, onBack,
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto">
+      <WizardBreadcrumb project={project} fileInfo={fileInfo} />
       <div>
         <h2 className="text-2xl font-semibold text-foreground">Approve & Import</h2>
         <p className="text-sm text-muted-foreground mt-0.5">Review the import summary and confirm to proceed.</p>
@@ -92,8 +94,8 @@ export default function Step6ApproveImport({ rows, project, mergeResult, onBack,
         </span>
       </label>
 
-      <div className="flex justify-between pt-2">
-        <Button variant="outline" onClick={onBack} disabled={status === 'loading'}>Back</Button>
+      <div className="flex flex-col sm:flex-row justify-between gap-2 pt-2">
+        <Button variant="outline" onClick={onBack} disabled={status === 'loading'}>← Back</Button>
         <Button
           onClick={handleImport}
           disabled={!confirmed || status === 'loading'}

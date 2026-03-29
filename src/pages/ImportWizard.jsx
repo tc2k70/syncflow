@@ -55,6 +55,7 @@ export default function ImportWizard() {
         )}
         {step === 2 && (
           <Step1FileSelect
+            project={project}
             onNext={(parsedRows, info) => {
               setRows(parsedRows);
               setFileInfo(info);
@@ -67,6 +68,7 @@ export default function ImportWizard() {
           <Step3Validate
             rows={rows}
             fileInfo={fileInfo}
+            project={project}
             onNext={() => setStep(4)}
             onBack={() => setStep(2)}
           />
@@ -75,6 +77,7 @@ export default function ImportWizard() {
           <Step5PreMerge
             rows={rows}
             project={project}
+            fileInfo={fileInfo}
             onNext={(result) => {
               setMergeResult(result);
               setStep(5);
@@ -86,6 +89,7 @@ export default function ImportWizard() {
           <Step6ApproveImport
             rows={rows}
             project={project}
+            fileInfo={fileInfo}
             mergeResult={mergeResult}
             onBack={() => setStep(4)}
             onImportDone={(result) => setImportResult(result)}

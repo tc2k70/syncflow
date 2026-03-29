@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { Upload, FileSpreadsheet, AlertCircle, Download, Info, CheckCircle2 } from 'lucide-react';
+import WizardBreadcrumb from './WizardBreadcrumb';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SAMPLE_ROWS } from '@/lib/mockData';
@@ -12,7 +13,7 @@ const FILE_REQUIREMENTS = [
   'Data should be in rows starting from row 2 (after headers)',
 ];
 
-export default function Step1FileSelect({ onNext }) {
+export default function Step1FileSelect({ onNext, onBack, project }) {
   const [dragging, setDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
@@ -41,7 +42,8 @@ export default function Step1FileSelect({ onNext }) {
 
   return (
     <div className="flex flex-col gap-5 w-full max-w-2xl mx-auto">
-      <div className="text-center">
+      {project && <WizardBreadcrumb project={project} />}
+      <div>
         <h2 className="text-2xl font-semibold text-foreground">Upload Circuit Line List</h2>
         <p className="text-sm text-muted-foreground mt-1">Upload an Excel file containing your circuit data for validation</p>
       </div>
@@ -125,8 +127,8 @@ export default function Step1FileSelect({ onNext }) {
         ))}
       </div>
 
-      <div className="flex justify-between pt-2 border-t border-border">
-        <span />
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-2 border-t border-border">
+        <Button variant="outline" onClick={onBack} disabled={!onBack}>← Back</Button>
         <div className="flex gap-3">
           <Button variant="outline" onClick={() => onNext(SAMPLE_ROWS, { name: 'Demo_LineList.xlsx' })}>
             Load Demo

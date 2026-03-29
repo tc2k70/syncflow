@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { AlertTriangle, CheckCircle2, Loader2, Search, List, Table2, GitBranch, Download, FileSpreadsheet, Lightbulb, ChevronRight, ChevronDown } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Loader2, Search, List, Table2, GitBranch, Download, FileSpreadsheet, Lightbulb } from 'lucide-react';
+import TreeViewDetail from './TreeViewDetail';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -136,49 +137,6 @@ function TableView({ rows, result }) {
           </tbody>
         </table>
       </div>
-    </div>
-  );
-}
-
-// ── Tree View ───────────────────────────────────────────────────────────────
-function TreeNode({ label, children, hasError }) {
-  const [open, setOpen] = useState(true);
-  return (
-    <div className="ml-3">
-      <button onClick={() => setOpen(o => !o)} className="flex items-center gap-1.5 py-1 text-xs text-foreground hover:text-primary transition-colors">
-        {open ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
-        {hasError && <AlertTriangle className="w-3 h-3 text-yellow-500" />}
-        {!hasError && <CheckCircle2 className="w-3 h-3 text-emerald-500" />}
-        <span className="font-medium">{label}</span>
-      </button>
-      {open && children && <div className="ml-4 border-l border-border pl-2">{children}</div>}
-    </div>
-  );
-}
-
-function TreeView({ rows, result }) {
-  const grouped = {};
-  rows.forEach((row, i) => {
-    const key = row.heaterFamily || 'Unknown Family';
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push({ row, idx: i });
-  });
-
-  return (
-    <div className="border border-border rounded-lg bg-card p-3">
-      {Object.entries(grouped).map(([family, items]) => {
-        const familyHasError = items.some(({ idx }) => result?.errors?.some(e => e.row === idx + 1));
-        return (
-          <TreeNode key={family} label={family} hasError={familyHasError}>
-            {items.map(({ row, idx }) => {
-              const hasError = result?.errors?.some(e => e.row === idx + 1);
-              return (
-                <TreeNode key={idx} label={`${row.circuitName || `Row ${idx + 1}`} / ${row.lineNumber || '—'}`} hasError={hasError} />
-              );
-            })}
-          </TreeNode>
-        );
-      })}
     </div>
   );
 }
@@ -327,7 +285,7 @@ export default function Step3Validate({ rows, fileInfo, onNext, onBack }) {
             <div className="min-h-[200px]">
               {viewMode === 'list' && <ListView rows={displayRows} result={result} />}
               {viewMode === 'table' && <TableView rows={displayRows} result={result} />}
-              {viewMode === 'tree' && <TreeView rows={displayRows} result={result} />}
+              {viewMode === 'tree' && <TreeViewDetail rows={rows} result={result} fileInfo={fileInfo} />}
               {displayRows.length === 0 && (
                 <div className="flex items-center justify-center py-10 text-sm text-muted-foreground">No records to display.</div>
               )}

@@ -56,38 +56,38 @@
 
   /* ─── DARK THEME ──────────────────────── */
   html[data-theme='dark'] {
-    --background: 210 36% 10%;
+    --background: 213 41% 10%;
     --foreground: 0 0% 100%;
-    --card: 205 28% 14%;
+    --card: 213 28% 13%;
     --card-foreground: 0 0% 100%;
-    --popover: 205 28% 14%;
+    --popover: 213 28% 13%;
     --popover-foreground: 0 0% 100%;
-    --primary: 3 77% 47%;
+    --primary: 210 50% 32%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 207 30% 19%;
+    --secondary: 213 28% 18%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 207 30% 19%;
-    --muted-foreground: 210 14% 73%;
-    --accent: 207 30% 22%;
+    --muted: 213 28% 18%;
+    --muted-foreground: 200 6% 60%;
+    --accent: 213 28% 20%;
     --accent-foreground: 0 0% 100%;
     --destructive: 3 77% 47%;
     --destructive-foreground: 0 0% 100%;
-    --border: 207 28% 22%;
-    --input: 207 28% 22%;
-    --ring: 3 77% 47%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
+    --border: 213 28% 20%;
+    --input: 213 28% 20%;
+    --ring: 210 50% 32%;
+    --chart-1: 210 50% 45%;
+    --chart-2: 158 100% 13%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 213 41% 8%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 210 50% 32%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 213 28% 16%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 213 28% 18%;
+    --sidebar-ring: 210 50% 32%;
   }
 }
 
@@ -110,4 +110,10 @@
     font-weight: 400;
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+  .text-valid { color: var(--thermon-green); }
+  .bg-valid { background-color: color-mix(in srgb, var(--thermon-green) 15%, transparent); }
+  .border-valid { border-color: color-mix(in srgb, var(--thermon-green) 40%, transparent); }
 }

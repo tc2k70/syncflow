@@ -28,13 +28,13 @@ export default function Step6ApproveImport({ rows, project, fileInfo, mergeResul
   if (status === 'done' && importResult) {
     return (
       <div className="flex flex-col items-center gap-6 max-w-md mx-auto py-8 text-center">
-        <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center">
-          <CheckCircle2 className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+        <div className="w-16 h-16 rounded-full bg-valid flex items-center justify-center">
+          <CheckCircle2 className="w-8 h-8" style={{color: 'var(--thermon-green)'}} />
         </div>
         <div>
           <h2 className="text-2xl font-semibold text-foreground">Import Complete</h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Successfully imported <span className="font-semibold text-foreground">{importResult.imported} circuits</span> into {project.name}.
+            Successfully imported <span className="font-semibold" style={{color: 'var(--thermon-green)'}}>{importResult.imported} circuits</span> into {project.name}.
           </p>
         </div>
         <div className="w-full grid grid-cols-2 gap-3 text-left">
@@ -76,7 +76,7 @@ export default function Step6ApproveImport({ rows, project, fileInfo, mergeResul
           <span className="text-muted-foreground">Total Rows</span>
           <span className="font-medium text-foreground text-right">{rows.length}</span>
           <span className="text-muted-foreground">New Records</span>
-          <span className="font-medium text-emerald-600 dark:text-emerald-400 text-right">{mergeResult?.newRecords?.length ?? rows.length}</span>
+          <span className="font-medium text-right" style={{color: 'var(--thermon-green)'}}>{mergeResult?.newRecords?.length ?? rows.length}</span>
           <span className="text-muted-foreground">Duplicates (will overwrite)</span>
           <span className="font-medium text-yellow-600 dark:text-yellow-400 text-right">{mergeResult?.duplicates?.length ?? 0}</span>
         </div>

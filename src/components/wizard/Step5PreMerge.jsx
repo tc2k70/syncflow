@@ -53,9 +53,9 @@ export default function Step5PreMerge({ rows, project, fileInfo, onNext, onBack 
           </div>
 
           {result.duplicates.length === 0 ? (
-            <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">No duplicate records found. Safe to proceed with import.</p>
+            <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-valid border border-valid">
+              <CheckCircle2 className="w-5 h-5 shrink-0" style={{color: 'var(--thermon-green)'}} />
+              <p className="text-sm font-medium" style={{color: 'var(--thermon-green)'}}>No duplicate records found. Safe to proceed with import.</p>
             </div>
           ) : (
             <div className="flex items-start gap-3 px-4 py-3 rounded-lg bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800">

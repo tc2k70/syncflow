@@ -24,7 +24,7 @@ function ListView({ rows, result }) {
             <div className="mt-0.5 shrink-0">
               {hasError
                 ? <AlertTriangle className="w-4 h-4 text-yellow-500" />
-                : <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+                : <CheckCircle2 className="w-4 h-4" style={{color: 'var(--thermon-green)'}} />}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ function TableView({ rows, result }) {
                   <td className="px-3 py-2 whitespace-nowrap">
                     {hasError
                       ? <span className="flex items-center gap-1 text-yellow-600 font-medium"><AlertTriangle className="w-3.5 h-3.5" />Error</span>
-                      : <span className="flex items-center gap-1 text-emerald-600 font-medium"><CheckCircle2 className="w-3.5 h-3.5" />Valid</span>}
+                      : <span className="flex items-center gap-1 font-medium" style={{color: 'var(--thermon-green)' }}><CheckCircle2 className="w-3.5 h-3.5" />Valid</span>}
                   </td>
                   {VIEW_COLS.map(c => (
                     <td key={c.key} className="px-3 py-2 text-foreground whitespace-nowrap max-w-[120px] truncate">
@@ -148,9 +148,9 @@ export default function Step3Validate({ rows, fileInfo, project, onNext, onBack 
           <>
             {/* Stats */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="p-4 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/20">
-                <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{validRows.length}</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-500 mt-0.5">Valid Circuits</p>
+              <div className="p-4 rounded-lg bg-valid border border-valid">                
+                <p className="text-2xl font-bold text-valid">{validRows.length}</p>
+                <p className="text-xs mt-0.5" style={{color: 'var(--thermon-green)'}}>Valid Circuits</p>
               </div>
               <div className="p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
                 <p className="text-2xl font-bold text-destructive">{errorRows.length}</p>

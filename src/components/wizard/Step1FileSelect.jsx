@@ -100,8 +100,8 @@ export default function Step1FileSelect({ onNext, onBack, project }) {
       </div>
 
       {selectedFile && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-valid border border-valid">
+          <CheckCircle2 className="w-4 h-4 shrink-0" style={{color: 'var(--thermon-green)'}} />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-foreground truncate">{selectedFile.name}</p>
             <p className="text-xs text-muted-foreground">{(selectedFile.size / 1024).toFixed(1)} KB</p>
@@ -121,7 +121,7 @@ export default function Step1FileSelect({ onNext, onBack, project }) {
         <p className="text-sm font-semibold text-foreground">File Requirements</p>
         {FILE_REQUIREMENTS.map((req, i) => (
           <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{color: 'var(--thermon-green)'}} />
             {req}
           </div>
         ))}

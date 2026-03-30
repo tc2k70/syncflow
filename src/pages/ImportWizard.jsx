@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Layers, GitBranch, Eye } from 'lucide-react';
+import { FileSpreadsheet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StepIndicator from '../components/wizard/StepIndicator';
 import Step4SelectProject from '../components/wizard/Step4SelectProject';
@@ -20,38 +20,14 @@ export default function ImportWizard() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="flex items-stretch sticky top-0 z-10" style={{ background: 'var(--thermon-black)', borderBottom: '3px solid var(--thermon-red)' }}>
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 px-4 py-2.5 border-r border-white/10">
-          <div className="w-6 h-6 rounded flex items-center justify-center" style={{ background: 'var(--thermon-red)' }}>
-            <Layers className="w-3.5 h-3.5 text-white" />
+      <header className="px-6 py-3 flex items-center justify-between sticky top-0 z-10" style={{ background: 'var(--thermon-black)', borderBottom: '3px solid var(--thermon-red)' }}>
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded flex items-center justify-center" style={{ background: 'var(--thermon-red)' }}>
+            <FileSpreadsheet className="w-4 h-4 text-white" />
           </div>
-          <span className="text-xs text-white tracking-widest uppercase font-bold hidden sm:block" style={{ fontFamily: "'Oswald', sans-serif" }}>HeatTrace Import</span>
+          <span className="text-sm text-white tracking-widest uppercase font-bold" style={{ fontFamily: "'Oswald', sans-serif" }}>HeatTrace Import</span>
         </div>
-
-        {/* Tab navigation */}
-        <nav className="flex items-stretch flex-1">
-          {[
-            { icon: Layers, label: 'Projects', s: 1 },
-            { icon: GitBranch, label: 'Circuits', s: 3 },
-            { icon: Eye, label: 'Review', s: 5 },
-          ].map(({ icon: Icon, label, s }) => {
-            const active = step === s || (s === 1 && step <= 2) || (s === 3 && step === 4);
-            return (
-              <div key={label} className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider border-b-2 transition-colors cursor-default ${
-                active
-                  ? 'border-white text-white bg-white/10'
-                  : 'border-transparent text-white/50'
-              }`}>
-                <Icon className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{label}</span>
-              </div>
-            );
-          })}
-        </nav>
-
-        {/* Right side */}
-        <div className="flex items-center gap-3 px-4">
+        <div className="flex items-center gap-3">
           {importResult && (
             <Link to={`/project/${project?.id}`} className="text-xs text-white/60 hover:text-white transition-colors">
               View Last Import →
@@ -62,7 +38,7 @@ export default function ImportWizard() {
       </header>
 
       {/* Step indicator */}
-      <div className="border-b border-border bg-card/50">
+      <div className="border-b border-border bg-card/30">
         <StepIndicator currentStep={step} />
       </div>
 

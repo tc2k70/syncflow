@@ -32,25 +32,25 @@
 
   /* ─── LIGHT THEME ─────────────────────── */
   :root, html[data-theme='light'] {
-    --background: 220 14% 96%;
-    --foreground: 210 47% 11%;
+    --background: 210 20% 95%;
+    --foreground: 213 30% 18%;
     --card: 0 0% 100%;
-    --card-foreground: 210 47% 11%;
+    --card-foreground: 213 30% 18%;
     --popover: 0 0% 100%;
-    --popover-foreground: 210 47% 11%;
-    --primary: 3 77% 47%;
+    --popover-foreground: 213 30% 18%;
+    --primary: 207 72% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 93%;
-    --secondary-foreground: 210 47% 11%;
-    --muted: 220 14% 93%;
-    --muted-foreground: 210 14% 44%;
-    --accent: 220 14% 90%;
-    --accent-foreground: 210 47% 11%;
+    --secondary: 210 16% 90%;
+    --secondary-foreground: 213 30% 25%;
+    --muted: 210 16% 93%;
+    --muted-foreground: 213 14% 48%;
+    --accent: 207 60% 92%;
+    --accent-foreground: 207 72% 30%;
     --destructive: 3 77% 47%;
     --destructive-foreground: 0 0% 100%;
-    --border: 210 14% 71%;
-    --input: 210 14% 71%;
-    --ring: 3 77% 47%;
+    --border: 210 14% 83%;
+    --input: 210 14% 83%;
+    --ring: 207 72% 42%;
     --radius: 0.5rem;
   }
 
